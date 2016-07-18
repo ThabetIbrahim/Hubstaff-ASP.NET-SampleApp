@@ -10,7 +10,8 @@ namespace screenshots_space
             Dictionary <string, string[]> param = new Dictionary <string, string[]>();
             param["start_time"] = new string[] {"start_time"};
             param["stop_time"]   = new string[] {"stop_time"};
-            param.Add("options", new string[] {"organizations","projects","users","offset"});
+            param["offset"]   = new string[] {"offset"};
+            param.Add("options", new string[] {"organizations","projects","users"});
 
             Dictionary <string, string> value_type = new Dictionary <string, string>();
             value_type["organizations"] = "input";
@@ -25,12 +26,13 @@ namespace screenshots_space
             return View();
         }
         [HttpPost]
-        public ActionResult Index(string start_time, string stop_time, Dictionary<string, string> options)
+        public ActionResult Index(string start_time, string stop_time,int offset, Dictionary<string, string> options)
         {
             Dictionary <string, string[]> param = new Dictionary <string, string[]>();
             param["start_time"] = new string[] {"start_time"};
             param["stop_time"]   = new string[] {"stop_time"};
-            param.Add("options", new string[] {"organizations","projects","users","offset"});
+            param["offset"]   = new string[] {"offset"};
+            param.Add("options", new string[] {"organizations","projects","users"});
 
             Dictionary <string, string> value_type = new Dictionary <string, string>();
             value_type["organizations"] = "input";
@@ -44,7 +46,7 @@ namespace screenshots_space
             ViewBag.value_type = value_type;
             aspnetcoreapp.hubstaff_api hubstaff_api = new aspnetcoreapp.hubstaff_api();
             
-            ViewBag.screenshots = hubstaff_api.screehshots(start_time, stop_time, options);
+            ViewBag.screenshots = hubstaff_api.screehshots(start_time, stop_time, options, offset);
 
             return View();
         }

@@ -114,7 +114,7 @@ namespace aspnetcoreapp
             return JObject.Parse(_act.get_activities(config.App_token, config.auth_token,starttime,stoptime,options,offset,config.base_url+config.activities).Result);
         }
 
-        public JObject screehshots(string starttime, string stoptime, Dictionary<string, string> options,int offset = 0)
+        public JObject screehshots(string starttime, string stoptime, Dictionary<string, string> options, int offset = 0)
         {
             screenshots_space.screenshotsClass _screenshots= new screenshots_space.screenshotsClass();
             return JObject.Parse(_screenshots.get_screenshots(config.App_token, config.auth_token,starttime,stoptime,options,offset,config.base_url+config.screenshots).Result);

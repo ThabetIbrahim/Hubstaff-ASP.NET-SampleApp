@@ -1,0 +1,33 @@
+<div class = "second-header" >
+@{
+    string email = "";
+    string password = "";
+    if (IsPost) {
+        string email = Request.Form["email"];
+        string password = Request.Form["password"];
+        
+         aspnetcoreapp.hubstaff_api hubstaff = new aspnetcoreapp.hubstaff_api();
+         Dictionary<string,string> data = hubstaff.auth(email, password);
+         if(data["error"] != null)
+         {
+            <text> <div class = 'info'>error: @data['error']</div>  </text>
+         }else
+         {
+            <text> <div class = 'info'>Your auth token is: @data['auth_token']</div>  </text>
+
+         }
+    }
+}
+
+
+
+	<a href = "#" class = "connect" >Connect to Hubstaff</a>
+	<div class = "hubstaff-form" @{ if(!IsPost){ <text> style = "display: none" </text> } >
+		<form method = "post" action="" >
+			<input type = "text" name = "email" value = "<?php echo $email; ?>" placeholder="Add your Hubstaff account email address" >
+			<input type = "text" name = "password" value = "<?php echo $password; ?>" placeholder="Add your Hubstaff account password" >
+			<br />
+			<input type = "submit" value = "Connect">
+		</form>
+	</div>
+</div>

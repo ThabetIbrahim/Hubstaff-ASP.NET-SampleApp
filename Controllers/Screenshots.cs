@@ -44,7 +44,7 @@ namespace screenshots_space
             
             ViewBag.param = param;
             ViewBag.value_type = value_type;
-            aspnetcoreapp.hubstaff_api hubstaff_api = new aspnetcoreapp.hubstaff_api();
+            hubstaff.client hubstaff_api = new hubstaff.client();
             
             ViewBag.screenshots = hubstaff_api.screehshots(start_time, stop_time, options, offset);
 

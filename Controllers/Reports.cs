@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-
 namespace reports_space
 {
     public class reports : Controller
     {
         public IActionResult Index(){
+
             Dictionary <string, string[]> param = new Dictionary <string, string[]>();
             param["start_date"] = new string[] {"start_date"};
             param["end_date"]   = new string[] {"end_date"};
             param.Add("options", new string[] {"organizations","projects","users","show_tasks","show_notes","show_activity","include_archived"});
-            
             
             Dictionary <string, string> value_type = new Dictionary <string, string>();
             value_type["organizations"] = "input";
@@ -50,7 +49,7 @@ namespace reports_space
             
             ViewBag.param = param;
             ViewBag.value_type = value_type;
-            aspnetcoreapp.hubstaff_api hubstaff_api = new aspnetcoreapp.hubstaff_api();
+            hubstaff.client hubstaff_api = new hubstaff.client();
             ViewBag.reports = hubstaff_api.custom_date_team(start_date, end_date, options);
 
             return View();

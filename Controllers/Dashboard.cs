@@ -8,12 +8,13 @@ namespace dashboard_space
             return View();
         }
         [HttpPost]
-        public ActionResult Index(string email, string password, string operation)
+        public ActionResult Index(string App_token, string email, string password, string operation)
         {
-            aspnetcoreapp.hubstaff_api hubstaff_api = new aspnetcoreapp.hubstaff_api();
-            ViewBag.Data = hubstaff_api.auth(email,password);
+            hubstaff.client hubstaff_api = new hubstaff.client();
+            ViewBag.Data = hubstaff_api.auth(App_token,email,password);;
             ViewBag.email = email;
             ViewBag.password = password;
+            ViewBag.app_token = App_token;
             return View();
         }
 

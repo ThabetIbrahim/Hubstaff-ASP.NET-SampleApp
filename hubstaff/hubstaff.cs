@@ -1,47 +1,34 @@
-using System;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
 namespace hubstaff
 {
     public class client
     {
-        public client()
-        {
-            if(!Directory.Exists(config.root_folder+"store"))
-            {
-                Directory.CreateDirectory(config.root_folder+"store");
-            }
-        }
-        
-        public IServiceProvider serviceProvider;
         public string get_auth_token()
         {
-            if(File.Exists(@"store/auth.txt"))
-                return  System.IO.File.ReadAllText(@"store/auth.txt");
+            if(File.Exists(config.root_folder+"store/auth.txt"))
+                return  System.IO.File.ReadAllText(config.root_folder+"store/auth.txt");
             else return "";
         }
         public void set_auth_token(string auth_token)
         {
-            using (var stream = File.Open("store/auth.txt", FileMode.Create)) {
+            using (var stream = File.Open(config.root_folder+"store/auth.txt", FileMode.Create)) {
                 byte[] info = new UTF8Encoding(true).GetBytes(auth_token);
                 stream.Write(info,0,info.Length);
             }
         }
         public string get_app_token()
         {
-            if(File.Exists(@"store/app.txt"))
-                return System.IO.File.ReadAllText(@"store/app.txt");
+            if(File.Exists(config.root_folder+"store/app.txt"))
+                return System.IO.File.ReadAllText(config.root_folder+"store/app.txt");
             else return "";
         }
         public void set_app_token(string app_token)
         {
-            
-            using (var stream = File.Open("store/app.txt", FileMode.Create)) {
-                byte[] info = new UTF8Encoding(true).GetBytes(app_token);
+            using (var stream = File.Open(config.root_folder+"store/app.txt", FileMode.Create)) {
+                byte[] info = new UTF8Encoding(true).GetBytes(app_token.ToString());
                 stream.Write(info,0,info.Length);
             }
             
@@ -50,8 +37,15 @@ namespace hubstaff
 
         public Dictionary<string, string> auth(string App_token, string email,string password)
         {
-            auth_space.authClass _auth = new auth_space.authClass();
             Dictionary<string, string> returned_data = new Dictionary<string, string>();
+
+            if(!Directory.Exists(config.root_folder+"store"))
+            {
+                returned_data["error"] = "Store directory not found";
+                return returned_data;
+            }
+
+            auth_space.authClass _auth = new auth_space.authClass();
             string auth = get_auth_token();
             set_app_token(App_token);
             if (auth.Length == 0)
@@ -68,9 +62,12 @@ namespace hubstaff
                 }
                 if(auth_token_json["error"] != null){
                     returned_data["error"] = auth_token_json["error"].ToString();
+                    return returned_data;
                 }else
+                {
                     returned_data["auth_token"] = auth_token_json["user"]["auth_token"].ToString();
-                set_auth_token(returned_data["auth_token"]);
+                    set_auth_token(returned_data["auth_token"]);
+                }
             }
             else
             {
@@ -84,7 +81,6 @@ namespace hubstaff
         public JObject users(int organization_memberships = 1, int project_memberships = 1,int offset = 0)
         {
             user_space.userClass _users = new user_space.userClass();
-            Console.WriteLine(_users.get_users(get_app_token(), get_auth_token(), organization_memberships, project_memberships,offset, config.base_url + config.users).Result);
             return JObject.Parse(_users.get_users(get_app_token(), get_auth_token(), organization_memberships, project_memberships,offset, config.base_url + config.users).Result);
         }
         public JObject find_user(int id)

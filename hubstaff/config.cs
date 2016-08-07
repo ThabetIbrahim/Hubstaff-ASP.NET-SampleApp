@@ -4,7 +4,7 @@ namespace config
 {
     class config_class
     { 
-        public string root_folder = Directory.GetCurrentDirectory()+"/";
+        public string root_folder = Directory.GetCurrentDirectory()+"/hubstaff/"; // hubstaff library directory
         public string base_url = "https://api.hubstaff.com/v1/";
         public string auth_url = "auth";
         public string users = "users";

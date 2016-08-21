@@ -11,17 +11,18 @@
             <div class = 'info'>Your auth token is: @ViewBag.data["auth_token"]</div>
         }
     }
-
-    <p>
-	    <a href = "#" class = "connect" >Connect to Hubstaff</a>
-        <div class = "hubstaff-form" @if(ViewBag.email == null){ <text> style = "display: none" </text> } >
-        <input type="text" class="text" value="@ViewBag.app_token" id="email" name="email" placeholder="Please add your hubstaff app token" />
-        <input type="text" class="text" value="@ViewBag.email" id="email" name="email" placeholder="Please add your hubstaff account email" />
-        <input type="text" class="text" value="@ViewBag.password" id="email" name="password" placeholder="Please add your hubstaff account password" />
-        <br>
-        <input type="submit" class="submit" name = "submit" value="Connect" />
-        </div>
-    </p>
+	@if(ViewBag.data["auth_token"] == "")
+	{
+		<p>
+			<a href = "#" class = "connect" >Connect to Hubstaff</a>
+			<div class = "hubstaff-form" @if(ViewBag.email == null){ <text> style = "display: none" </text> } >
+			<input type="text" class="text" value="@ViewBag.email" id="email" name="email" placeholder="Please add your hubstaff account email" />
+			<input type="text" class="text" value="@ViewBag.password" id="email" name="password" placeholder="Please add your hubstaff account password" />
+			<br>
+			<input type="submit" class="submit" name = "submit" value="Connect" />
+			</div>
+		</p>
+	}
 
    
     

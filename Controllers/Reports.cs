@@ -34,8 +34,7 @@ namespace reports_space
             param["start_date"] = new string[] {"start_date"};
             param["end_date"]   = new string[] {"end_date"};
             param.Add("options", new string[] {"organizations","projects","users","show_tasks","show_notes","show_activity","include_archived"});
-            
-            
+
             Dictionary <string, string> value_type = new Dictionary <string, string>();
             value_type["organizations"] = "input";
             value_type["projects"] = "input";
@@ -46,10 +45,10 @@ namespace reports_space
             value_type["show_notes"] = "select";
             value_type["show_activity"] = "select";
             value_type["include_archived"] = "select";
-            
+
             ViewBag.param = param;
             ViewBag.value_type = value_type;
-            hubstaff.client hubstaff_api = new hubstaff.client();
+            hubstaff.client hubstaff_api = new hubstaff.client("pHR18-G-9c05NoyBtji3a8A2KsFKOuZcSZK4gT5V9vc");
             ViewBag.reports = hubstaff_api.custom_date_team(start_date, end_date, options);
 
             return View();

@@ -3,7 +3,7 @@ using System.IO;
 namespace config
 {
     class config_class
-    { 
+    {     
         public string root_folder = Directory.GetCurrentDirectory()+"/";
 
         public config_class()

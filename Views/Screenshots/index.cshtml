@@ -10,10 +10,13 @@
     }
 
 	@if(ViewBag.screenshots != null){
-		foreach(var screenshot in ViewBag.screenshots["screenshots"])
-		{
-		    <img src = "@screenshot["url"]" >
-		}
+        if(ViewBag.screenshots["screenshots"] != null)
+        {
+            foreach(var screenshot in ViewBag.screenshots["screenshots"])
+            {
+                <img src = "@screenshot["url"]" >
+            }
+        }
 	}	
     @using (Html.BeginForm())
     {

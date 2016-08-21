@@ -8,27 +8,29 @@
 		
 
     }
-    @ViewBag.ses
 	@if(ViewBag.reports != null){
-			foreach(var org in ViewBag.reports["organizations"])
-			{
-				<h2>Organization Name: @org["name"] </h2>
-				foreach(var dates in org["dates"])
-				{
-					foreach(var users in dates["users"])
-					{
-						<h3>User Name: @users["name"]</h3>
-						<h4>Time Spent: @users["duration"]</h4>
-						<br>
-						foreach(var project in users["projects"])
-						{
-                            <h3>User Name: @project["name"]</h3>
-                            <h4>Time Spent: @project["duration"]</h4>
+            if(ViewBag.reports["organizations"] != null)
+            {
+                foreach(var org in ViewBag.reports["organizations"])
+                {
+                    <h2>Organization Name: @org["name"] </h2>
+                    foreach(var dates in org["dates"])
+                    {
+                        foreach(var users in dates["users"])
+                        {
+                            <h3>User Name: @users["name"]</h3>
+                            <h4>Time Spent: @users["duration"]</h4>
                             <br>
-						}
-					}
-				}
-			}
+                            foreach(var project in users["projects"])
+                            {
+                                <h3>User Name: @project["name"]</h3>
+                                <h4>Time Spent: @project["duration"]</h4>
+                                <br>
+                            }
+                        }
+                    }
+                }
+            }
 			
 			
 	}	

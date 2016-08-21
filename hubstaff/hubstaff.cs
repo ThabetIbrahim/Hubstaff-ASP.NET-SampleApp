@@ -6,6 +6,11 @@ namespace hubstaff
 {
     public class client
     {
+        public string app_token = "";
+        public client(string app_token)
+        {
+            this.app_token = app_token;
+        }
         public string get_auth_token()
         {
             if(File.Exists(config.root_folder+"store/auth.txt"))
@@ -21,21 +26,12 @@ namespace hubstaff
         }
         public string get_app_token()
         {
-            if(File.Exists(config.root_folder+"store/app.txt"))
-                return System.IO.File.ReadAllText(config.root_folder+"store/app.txt");
-            else return "";
+            return this.app_token;
         }
-        public void set_app_token(string app_token)
-        {
-            using (var stream = File.Open(config.root_folder+"store/app.txt", FileMode.Create)) {
-                byte[] info = new UTF8Encoding(true).GetBytes(app_token.ToString());
-                stream.Write(info,0,info.Length);
-            }
-            
-        }
+
         private config.config_class config = new config.config_class();
 
-        public Dictionary<string, string> auth(string App_token, string email,string password)
+        public Dictionary<string, string> auth(string email,string password)
         {
             Dictionary<string, string> returned_data = new Dictionary<string, string>();
 
@@ -47,10 +43,9 @@ namespace hubstaff
 
             auth_space.authClass _auth = new auth_space.authClass();
             string auth = get_auth_token();
-            set_app_token(App_token);
             if (auth.Length == 0)
             {
-                var data = _auth.gen_auth(App_token, email, password, config.base_url + config.auth_url, 1).Result;
+                var data = _auth.gen_auth(this.app_token, email, password, config.base_url + config.auth_url, 1).Result;
                 JObject auth_token_json;
                 if(data == "fail"){
                     returned_data["error"] =  "Error occured";

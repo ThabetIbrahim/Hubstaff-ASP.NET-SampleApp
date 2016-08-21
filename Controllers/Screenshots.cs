@@ -44,7 +44,7 @@ namespace screenshots_space
             
             ViewBag.param = param;
             ViewBag.value_type = value_type;
-            hubstaff.client hubstaff_api = new hubstaff.client();
+            hubstaff.client hubstaff_api = new hubstaff.client("pHR18-G-9c05NoyBtji3a8A2KsFKOuZcSZK4gT5V9vc");
             
             ViewBag.screenshots = hubstaff_api.screehshots(start_time, stop_time, options, offset);
 
